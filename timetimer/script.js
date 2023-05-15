@@ -3,6 +3,24 @@ const clock = document.getElementById('clock');
 const secondHand = document.getElementById('secondHand');
 const rot = document.getElementById('rot');
 const draggable = document.getElementById('draggable');
+const hiddenArea = document.getElementById('hiddenArea');
+
+let isDragging = false;
+let isTransitioning = false;
+let isTicking = false;
+let originX = 0;
+let originY = 0;
+let initialRotation;
+var angle = 0;
+let min = 0;
+let sec = 0;
+var timeCount = 1;
+
+function changeTimeText(min, sec) {
+  if(min < 10) {min = '0' + min};
+  if(sec < 10) {sec = '0' + sec};
+  rot.textContent = min + ":" + sec;
+}
 
 function drawDials() {
     for(let i = 1; i <= 60; i++) {
@@ -19,42 +37,34 @@ function drawDials() {
 }
 
 // 마우스로 초침 이동 이벤트 발생시키기
-let isDragging = false;
-let isTransitioning = false;
-let isTicking = false;
-let originX = 0;
-let originY = 0;
-let originLeft = 0;
-let originTop = 0;
-let initialRotation = 0;
-let angle = 0;
-
 secondHand.addEventListener('mousedown', (event) => {
     isDragging = true;
-    changeToTime();
+    changeH1ToTime();
     const rect = secondHand.getBoundingClientRect();
     originX = event.clientX;
     originY = event.clientY;
-    initialRotation = getRotationValue(secondHand);
-  
-    // 초침의 위치를 마우스 클릭 위치로 이동
-    const dx = originX - rect.left - rect.width / 2;
-    const dy = originY - rect.top - rect.height / 2;
-    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-    secondHand.style.transform = `rotate(${initialRotation + angle}deg)`;
   });
   
   document.addEventListener('mousemove', (event) => {
+    event.preventDefault();
     if (isDragging) { 
       const dx = event.clientX - originX;
       const dy = event.clientY - originY;
-      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-      const newRotation = initialRotation + angle;
-      if(isTransitioning)
-        rot.textContent = `${Math.floor(3600 / newRotation)}:${Math.floor(3600 / newRotation)}`;
-  
-      // 초침의 회전 각도 적용
-      secondHand.style.transform = `rotate(${newRotation}deg)`;
+      angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      if(angle < 0)
+      angle += 360;
+      if(isTransitioning) {
+        min = Math.floor(`${60 * (angle / 360)}`);
+        sec = Math.floor(`${(3600 * (angle / 360)) % 60}`); 
+        changeTimeText(min, sec);
+      }
+      secondHand.style.transform = `rotate(${angle + 180}deg)`;
+      
+      const handLength = 500;
+      const hiddenAreaLength = (degree / 360) * handLength;
+      hiddenArea.style.display = 'block';
+      hiddenArea.style.width = `${hiddenAreaLength}px`;
+      hiddenArea.style.height = `${hiddenAreaLength}px`;
     }
   });
   
@@ -62,26 +72,42 @@ secondHand.addEventListener('mousedown', (event) => {
     isDragging = false;
     isTransitioning = false;
     isTicking = true;
+    if(timeCount === 1)
+      updateTime(isTicking);
     setTimerDraggable();
+    console.log('handOff'); 
   });
-  
-  function getRotationValue(element) {
-    const transformStyle = getComputedStyle(element).getPropertyValue('transform');
-    const matrix = transformStyle.match(/^matrix\((.+)\)$/);
-    if (matrix) {
-      const values = matrix[1].split(', ');
-      if (values.length === 6) {
-        const a = parseFloat(values[0]);
-        const b = parseFloat(values[1]);
-        const radians = Math.atan2(b, a);
-        console.log("동작중");
-        return radians * (180 / Math.PI);
-      }
-    }
-    return 0;
-  }
 
-function changeToTime() {
+  // 시간 감소
+function updateTime(isTicking) {
+  if(isTicking){
+    setInterval(() => {
+      sec -= 1;
+      if(sec == 0)
+      {
+        min -= 1;
+        sec = 59;
+      }
+      changeTimeText(min, sec);
+      // 1분에 6도, 1초에 (1/60*6도 -> 1/10도)
+      initialRotation = angle + 180;
+      secondHand.style.transform = `rotate(${initialRotation - timeCount / 10}deg)`;
+      console.log(initialRotation - timeCount);
+      timeCount++;
+    }, 1000);
+  }
+}
+
+  // secondHand.addEventListener('mouseup', (event) => {
+  //   isDragging = false;
+  //   isTransitioning = false;
+  //   isTicking = true;
+  //   updateTime();
+  //   setTimerDraggable();
+  //   console.log('handOff');
+  // });
+
+function changeH1ToTime() {
     rot.classList.add('text-transition');
     setTimeout(() => {
         rot.classList.remove('text-transition');
@@ -106,4 +132,5 @@ function setTimerDraggable() {
 }
 }
 
+updateTime(isTicking);
 drawDials();
