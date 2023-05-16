@@ -82,7 +82,8 @@ secondHand.addEventListener('mousedown', (event) => {
 function updateTime(isTicking) {
   if(isTicking){
     setInterval(() => {
-      sec -= 1;
+      if(sec !== 0)
+        sec -= 1;
       if(sec == 0)
       {
         min -= 1;
