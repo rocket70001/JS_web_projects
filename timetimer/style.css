@@ -67,14 +67,14 @@ h1 {
 } */
 
 .clock {
-    /* position: absolute;
+    position: absolute;
     width: 58.8vh;
     height: 58.8vh;
     border-radius: 50%;
     background: rgba(210, 62, 62, 0.7);
-    background-color: transparent;
+    /* background-color: transparent; */
     box-shadow: inset 0 20px 4px -19px rgba(#bc0000,0.4), 0 12px 12px 0 rgba(#b60000 0.3);  
-    z-index: 2; */
+    z-index: 2;
 
     /* position: absolute;
     top: 0;
@@ -83,16 +83,16 @@ h1 {
     height: 100%;
     border-radius: 50%;
     transition: background-color 0.2s ease-in-out; */
-
+/* 
     position: relative;
     width: 200px;
     height: 200px;
     border-radius: 50%;
     background-color: red;
-    overflow: hidden;
+    overflow: hidden; */
 }
 
-#hiddenArea {
+/* #hiddenArea {
     position: absolute;
     top: 0;
     left: 0;
@@ -100,7 +100,7 @@ h1 {
     height: 100%;
     display: none;
     background: red;
-}
+} */
 
 .innerCircle {
     position: absolute;

@@ -72,8 +72,9 @@ secondHand.addEventListener('mousedown', (event) => {
     isDragging = false;
     isTransitioning = false;
     isTicking = true;
-    if(timeCount === 1)
+    if(timeCount === 1 && min !== 0){
       updateTime(isTicking);
+    }
     setTimerDraggable();
     console.log('handOff'); 
   });
@@ -82,13 +83,13 @@ secondHand.addEventListener('mousedown', (event) => {
 function updateTime(isTicking) {
   if(isTicking){
     setInterval(() => {
-      if(sec !== 0)
-        sec -= 1;
       if(sec == 0)
       {
         min -= 1;
         sec = 59;
       }
+      else
+        sec -= 1;
       changeTimeText(min, sec);
       // 1분에 6도, 1초에 (1/60*6도 -> 1/10도)
       initialRotation = angle + 180;
