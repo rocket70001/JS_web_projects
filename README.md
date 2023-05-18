@@ -9,3 +9,4 @@
 0514 - <a href="./timetimer">토이 프로젝트</a><br>
 0515 - <a href="./timetimer">토이 프로젝트(시간 표기, 시침 움직임, background 색상 시침 따라서 보이기 -ing)</a><br>
 0517 - <a href="./udemy_JS/book-keeper">웹프로젝트 10(Book-Keeper)</a><br>
+0518 - <a href="./udemy_JS/video-player">웹프로젝트 11(Video-Player)</a>, <a href="./udemy_JS/form-validator">웹프로젝트 12(Form-Validator)</a><br>
