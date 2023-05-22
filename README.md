@@ -13,4 +13,4 @@
 0519 - <a href="./udemy_JS/spock-rock-game">웹프로젝트 13(spock-rock-game)</a>, <a href="./udemy_JS/nasa-api-pictures">웹프로젝트 14(NASA Picture api)</a><br>
 0520 - <a href="./udemy_JS/math-sprint-game">웹프로젝트 15(math-sprint-game)</a><br>
 0521 - <a href="./udemy_JS/drag-and-drop">웹프로젝트 16(drag-and-drop)</a><br>
-
+0522 - <a href="./udemy_JS/splash-page">웹프로젝트 17(splash-page 피그마 활용)</a>, <a href="./udemy_JS/calculator">웹프로젝트 18(calculator)</a>, <a href="./udemy_JS/paint-clone>">웹 프로젝트 19(paint-clone)</a><br>
